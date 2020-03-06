@@ -14,6 +14,10 @@
     "build": "rollup -c",
     "dev": "rollup -c -w"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RodrigoQuesadaDev/rememer.git"
+  },
   "keywords": [
     "rem",
     "em",
@@ -27,6 +31,10 @@
   ],
   "author": "RodrigoDEV",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RodrigoQuesadaDev/rememer/issues"
+  },
+  "homepage": "https://github.com/RodrigoQuesadaDev/rememer",
   "peerDependencies": {
     "react": ">= ^16.8.0"
   },
