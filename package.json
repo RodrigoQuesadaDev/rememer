@@ -2,12 +2,17 @@
   "name": "rememer",
   "version": "0.0.1",
   "description": "A library that helps you get rid of any pixel measurements in your React app, allowing you to create fully elastic websites.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/rememer.cjs.js",
+  "jsnext:main": "dist/rememer.esm.js",
+  "module": "dist/rememer.esm.js",
+  "browser": {
+    "./dist/rememer.esm.js": "./dist/rememer.browser.esm.js",
+    "./dist/rememer.cjs.js": "./dist/rememer.browser.cjs.js"
+  },
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run build:types && npm run build:js",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline"
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
   },
   "keywords": [
     "rem",
@@ -33,11 +38,19 @@
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-json": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/node": "^13.7.7",
     "@types/react": "^16.9.23",
     "hoist-non-react-statics": "^3.3.2",
     "react": "^16.13.0",
+    "rollup": "^1.32.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-sourcemaps": "^0.5.0",
+    "rollup-plugin-typescript2": "^0.26.0",
+    "tslib": "^1.11.1",
     "typescript": "^3.8.3"
   }
 }
