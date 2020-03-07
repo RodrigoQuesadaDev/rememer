@@ -11,6 +11,7 @@ abstract class FontSizeBase {
     constructor(readonly scaleFactor: number = 1) {
     }
 
+    calcRatio = (px: number): number => px / this.px;
     relativeCssValue = (px: number): string => `${px / this.px}em`;
     toString = () => this.cssValue;
 }
