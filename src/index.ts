@@ -1,5 +1,4 @@
-export {memer, remem} from './rememer';
-export type { FontSizeConfiguration, RememerProps, RememerComponent } from './rememer';
+export {memer, remem, FontSizeConfiguration, RememerProps, RememerComponent} from './rememer';
 export {px} from './px';
 export {bp} from './bp';
 export {lineHeight} from './line-height';

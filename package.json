@@ -1,6 +1,6 @@
 {
   "name": "rememer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A library that helps you get rid of any pixel measurements in your React app, allowing you to create fully elastic websites.",
   "main": "dist/rememer.cjs.js",
   "jsnext:main": "dist/rememer.esm.js",
