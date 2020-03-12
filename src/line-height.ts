@@ -1,8 +1,13 @@
 import {useRememerContext} from './rememer-provider';
 import {scopedFontSize} from 'scoped-font-size';
+import {LazyNumber, NumberOrLazyNumber} from "./global-types";
 
-export const lineHeight = (px: number): number => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const context = useRememerContext('lineHeight');
-    return (scopedFontSize() || context.fontSize).calcRatio(px);
-};
+export function lineHeight(px: NumberOrLazyNumber): LazyNumber
+{
+    const scopedFontSizeValue = scopedFontSize();
+    return () => {
+
+        const context = useRememerContext('lineHeight');
+        return (scopedFontSizeValue || context.fontSize).calcRatio(px)();
+    }
+}

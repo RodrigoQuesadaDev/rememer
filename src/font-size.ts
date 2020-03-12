@@ -1,50 +1,53 @@
-const BROWSER_DEFAULT_FONT_SIZE_PX = 16;
+import {LazyNumber, LazyString, LazyValue, NumberOrLazyNumber, val} from "./global-types";
+
+export const BROWSER_DEFAULT_FONT_SIZE_PX = 16;
 
 export type FontSizeUnit = 'rem' | 'em';
 
+const DEFAULT_SCALE_FACTOR = () => 1;
+
 abstract class FontSizeBase {
-    abstract readonly px: number;
-    abstract readonly cssValue: string;
+    abstract readonly px: NumberOrLazyNumber;
+    abstract readonly cssValue: LazyString;
     abstract readonly unit: FontSizeUnit;
-    abstract readonly isRoot: boolean;
 
-    constructor(readonly scaleFactor: number = 1) {
-    }
+    constructor(readonly scaleFactor: NumberOrLazyNumber = DEFAULT_SCALE_FACTOR) {}
 
-    calcRatio = (px: number): number => px / this.px;
-    relativeCssValue = (px: number): string => `${px / this.px}em`;
-    toString = () => this.cssValue;
+    calcRatio = (px: NumberOrLazyNumber): LazyNumber => () => val(px) / val(this.px);
+    relativeCssValue = (px: NumberOrLazyNumber): LazyString => () => `${val(px) / val(this.px)}em`;
 }
 
 export interface IFontSize extends FontSizeBase {}
 
+const ROOT_PX_VALUE = () => BROWSER_DEFAULT_FONT_SIZE_PX;
+
 export class RootFontSize extends FontSizeBase {
 
-    readonly isRoot = false;
-    readonly px = BROWSER_DEFAULT_FONT_SIZE_PX;
-    readonly cssValue: string;
+    readonly px = ROOT_PX_VALUE;
+    readonly cssValue: LazyString;
     readonly unit = 'em';
 
-    constructor(scaleFactor?: number) {
+    constructor(scaleFactor?: NumberOrLazyNumber)
+    {
         super(scaleFactor);
-        this.cssValue = `${this.scaleFactor}${this.unit}`;
+        this.cssValue = () => `${this.scaleFactor}${this.unit}`;
     }
 
-    browserRelativeCssValue = (px: number): string => this.relativeCssValue(px * this.scaleFactor);
+    browserRelativeCssValue = (px: NumberOrLazyNumber): LazyString => this.relativeCssValue(val(px) * val(this.scaleFactor));
 }
 
 export class FontSize extends FontSizeBase {
 
-    readonly isRoot = false;
-    readonly cssValue: string;
+    readonly cssValue: LazyString;
 
     constructor(
-        readonly px: number,
+        readonly px: NumberOrLazyNumber,
         readonly unit: FontSizeUnit,
-        parent: FontSizeBase,
-        scaleFactor?: number
-    ) {
+        parent: LazyValue<FontSizeBase>,
+        scaleFactor?: NumberOrLazyNumber
+    )
+    {
         super(scaleFactor);
-        this.cssValue = `${this.scaleFactor * px / parent.px}${unit}`;
+        this.cssValue = () => `${val(this.scaleFactor) * val(px) / val(parent().px)}${unit}`;
     }
 }
