@@ -2,7 +2,7 @@ import {RememerContextValue, useRememerContext} from './rememer-provider';
 import {FontSizeConfiguration, isRememerComponent, RememerComponent} from './rememer';
 import {FontSize} from './font-size';
 import {scopedFontSize, withScopedFontSize} from './scoped-font-size';
-import {LazyString, LazyValue, NumberOrLazyNumber, val} from "./global-types";
+import {LazyString, LazyValue, mapLazyProperties, NumberOrLazyNumber} from "./lazy-values";
 
 type PxBody<T> = () => T;
 
@@ -24,7 +24,13 @@ export function px<T>(arg1?: NumberOrLazyNumber | RememerComponent<any, any>, ar
             if (assumedConfig?.fontSize !== undefined) partialFontSizeConfig.fontSize = assumedConfig.fontSize;
 
             if (partialFontSizeConfig.scaleFactor === undefined) partialFontSizeConfig.scaleFactor = 1;
-            if (assumedConfig?.scaleFactor !== undefined) partialFontSizeConfig.scaleFactor = () => val(partialFontSizeConfig.scaleFactor!) * val(assumedConfig.scaleFactor!);
+
+            if (assumedConfig?.scaleFactor !== undefined) {
+                partialFontSizeConfig.scaleFactor = mapLazyProperties(
+                    [partialFontSizeConfig.scaleFactor, assumedConfig.scaleFactor],
+                    (a, b) => a * b
+                );
+            }
 
             const fontSizeConfig: FontSizeConfiguration = partialFontSizeConfig as FontSizeConfiguration;
 

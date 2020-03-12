@@ -1,4 +1,4 @@
-import {LazyNumber, LazyString, LazyValue, NumberOrLazyNumber, val} from "./global-types";
+import {LazyNumber, LazyString, LazyValue, NumberOrLazyNumber, val} from "./lazy-values";
 
 export const BROWSER_DEFAULT_FONT_SIZE_PX = 16;
 

@@ -4,7 +4,7 @@ import {hoc} from './common/hoc';
 import {RememProvider} from './remem-provider';
 import {BROWSER_DEFAULT_FONT_SIZE_PX, FontSize, FontSizeUnit, IFontSize} from './font-size';
 import {createRememerComponentPxFunction, RememerComponentPxFn} from './px';
-import {NumberOrLazyNumber, val} from "./global-types";
+import {mapLazyProperties, NumberOrLazyNumber} from "./lazy-values";
 
 export function remem<P, C extends ComponentType<P> = ComponentType<P>>(Component: C): RememerComponent<C, P>;
 export function remem<P, C extends ComponentType<P> = ComponentType<P>>(configuration: Partial<FontSizeConfiguration>, Component: C): RememerComponent<C, P>;
@@ -63,8 +63,20 @@ function includeScaleFactorFromProps(config: FontSizeConfiguration, props: Remem
     if (props.fontSize === undefined && props.scaleFactor === undefined) return;
 
     if (config.scaleFactor === undefined) config.scaleFactor = 1;
-    if (props.fontSize !== undefined) config.scaleFactor = () => val(config.scaleFactor!) * val(props.fontSize!) / val(config.fontSize);
-    if (props.scaleFactor !== undefined) config.scaleFactor = () => val(config.scaleFactor!) * val(props.scaleFactor!);
+
+    if (props.fontSize !== undefined) {
+        config.scaleFactor = mapLazyProperties(
+            [config.scaleFactor, props.fontSize, config.fontSize],
+            (a, b, c) => a * b / c
+        );
+    }
+
+    if (props.scaleFactor !== undefined) {
+        config.scaleFactor = mapLazyProperties(
+            [config.scaleFactor, props.scaleFactor],
+            (a, b) => a * b
+        );
+    }
 }
 
 //region Argument Parsing
