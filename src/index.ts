@@ -1,7 +1,8 @@
-export {memer, remem, FontSizeConfiguration, RememerProps, RememerComponent} from './rememer';
-export {px} from './px';
-export {bp} from './bp';
-export {lineHeight} from './line-height';
+export {memer, remem, isRememerComponent, RememerProps, RememerComponent} from './rememer';
+export {UserFontSizeConfiguration, FontSizeConfiguration,} from './font-size-configuration';
+export {useRememer} from './use-rememer';
 export {RememerProvider} from './rememer-provider';
-export {scopedFontSize, withScopedFontSize} from './scoped-font-size';
-export {RootFontSize} from './font-size';
+export {IFontSize, RootFontSize} from './font-size';
+export {PxFn} from 'px';
+export {BpFn} from 'bp';
+export {LineHeightFn} from './line-height';

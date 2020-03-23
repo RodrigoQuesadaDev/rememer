@@ -8,7 +8,7 @@ interface RenderFunction<P> {
 
 export function hoc<C extends ComponentType<P>, P extends PropsWithChildren<any>, H extends C>(
     hocName: string,
-    Component: C,
+    Component: C & ComponentType<P>,
     render: RenderFunction<PropsWithChildren<any>>,
     postprocess: (hoc: H) => void
 ): H

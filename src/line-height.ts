@@ -1,13 +1,11 @@
-import {useRememerContext} from './rememer-provider';
-import {scopedFontSize} from 'scoped-font-size';
-import {LazyNumber, NumberOrLazyNumber} from "./lazy-values";
+import {RememerContextValue} from './rememer-provider';
+import {IFontSize} from "./font-size";
+import {NumberOrLazyNumber, val} from "./lazy-values";
 
-export function lineHeight(px: NumberOrLazyNumber): LazyNumber
-{
-    const scopedFontSizeValue = scopedFontSize();
-    return () => {
+export const lineHeight = (context: RememerContextValue, assumedFontSize?: IFontSize) => (px: NumberOrLazyNumber): number => {
+    return (assumedFontSize || context.fontSize).calcRatio(val(px))
+};
 
-        const context = useRememerContext('lineHeight');
-        return (scopedFontSizeValue || context.fontSize).calcRatio(px)();
-    }
-}
+//region Types
+export type LineHeightFn = ReturnType<typeof lineHeight>;
+//endregion

@@ -56,6 +56,11 @@
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/node": "^13.7.7",
     "@types/react": "^16.9.23",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "hoist-non-react-statics": "^3.3.2",
     "react": "^16.13.0",
     "rollup": "^1.32.0",
@@ -64,5 +69,10 @@
     "rollup-plugin-typescript2": "^0.26.0",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@types/lodash-es": "^4.17.3",
+    "lodash-es": "^4.17.15",
+    "react-use": "^13.27.0"
   }
 }
