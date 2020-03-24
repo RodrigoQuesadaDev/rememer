@@ -2,6 +2,7 @@ import {DependencyList, useMemo} from "react";
 import fastDeepEqual from "fast-deep-equal/react";
 import {groupBy, merge} from 'lodash-es';
 import {usePreviousDistinct} from 'react-use/esm';
+import {Predicate} from "react-use/esm/usePreviousDistinct";
 
 type DepsComparison = (prev: DependencyList, next: DependencyList) => boolean;
 
@@ -24,7 +25,7 @@ export function useCustomMemo<T>(
     }, options);
     const {'true': shallowComparisonDeps = [], 'false': customComparisonDeps = []} = groupBy(deps, useShallowComparison);
 
-    const prevCustomComparisonDeps = usePreviousDistinct(customComparisonDeps, comparison as (prev: any, next: any) => boolean) || [];
+    const prevCustomComparisonDeps = usePreviousDistinct(customComparisonDeps, comparison as Predicate<DependencyList>) || customComparisonDeps;
 
     return useMemo(factory, prevCustomComparisonDeps.concat(shallowComparisonDeps));
 }
