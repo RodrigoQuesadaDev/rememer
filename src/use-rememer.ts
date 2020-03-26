@@ -50,7 +50,8 @@ export function useRememer(arg1?: RememerComponent<any, any> | IFontSize, assume
         px: px(context, assumedFontSize),
         bp: bp(context),
         lineHeight: lineHeight(context, assumedFontSize),
-        fontSize: context.fontSize
+        fontSize: context.fontSize,
+        rootFontSize: context.rootFontSize
     }), [assumedFontSize, context]);
 }
 
@@ -64,6 +65,7 @@ type UseRememerReturnType = {
     px: PxFn,
     bp: BpFn,
     lineHeight: LineHeightFn,
-    fontSize: IFontSize
+    fontSize: IFontSize,
+    rootFontSize: IFontSize,
 }
 //endregion
