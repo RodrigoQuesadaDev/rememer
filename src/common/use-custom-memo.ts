@@ -1,6 +1,6 @@
 import {DependencyList, useMemo} from "react";
 import fastDeepEqual from "fast-deep-equal/react";
-import {groupBy, merge} from 'lodash-es';
+import {merge, partition} from 'lodash-es';
 import {useDistinct} from "./use-distinct";
 import {useFirst} from "./use-first";
 
@@ -25,7 +25,7 @@ export function useCustomMemo<T>(
         comparison: fastDeepEqual,
         useShallowComparison: DONT_USE_SHALLOW_COMPARISON
     }, options);
-    const {'true': shallowComparisonDeps = [], 'false': customComparisonDeps = []} = groupBy(deps, useShallowComparison);
+    const [shallowComparisonDeps = [], customComparisonDeps = []] = partition(deps, useShallowComparison);
 
     const prevCustomComparisonDeps = useDistinct<DependencyList>(customComparisonDeps, {comparison});
 
