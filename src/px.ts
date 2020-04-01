@@ -2,7 +2,9 @@ import {RememerContextValue} from './rememer-provider';
 import {IFontSize} from './font-size';
 import {NumberOrLazyNumber, val} from "./lazy-values";
 
-export const px = (context: RememerContextValue, assumedFontSize?: IFontSize) =>
+export type PxFn = (value?: NumberOrLazyNumber) => string;
+
+export const px = (context: RememerContextValue, assumedFontSize?: IFontSize): PxFn =>
     (value?: NumberOrLazyNumber): string => {
 
         assumedFontSize = assumedFontSize || context.fontSize;
@@ -13,8 +15,3 @@ export const px = (context: RememerContextValue, assumedFontSize?: IFontSize) =>
             return assumedFontSize.relativeCssValue(val(value));
         }
     };
-
-
-//region Types
-export type PxFn = ReturnType<typeof px>;
-//endregion

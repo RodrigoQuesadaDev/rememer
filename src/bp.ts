@@ -1,8 +1,6 @@
 import {RememerContextValue} from "./rememer-provider";
 import {NumberOrLazyNumber, val} from "./lazy-values";
 
-export const bp = (context: RememerContextValue) => (px: NumberOrLazyNumber): string => context.rootFontSize.browserRelativeCssValue(val(px));
+export type BpFn = (px: NumberOrLazyNumber) => string;
 
-//region Types
-export type BpFn = ReturnType<typeof bp>;
-//endregion
+export const bp = (context: RememerContextValue): BpFn => (px: NumberOrLazyNumber): string => context.rootFontSize.browserRelativeCssValue(val(px));

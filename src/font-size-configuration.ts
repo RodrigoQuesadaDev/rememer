@@ -1,16 +1,19 @@
 import {NumberOrLazyNumber, PossiblyLazyValue, val} from "./lazy-values";
 import {mapValues} from 'lodash-es';
 import {FontSizeUnit} from "./font-size";
-import {useMemo} from "react";
+import {ComponentType, useMemo} from "react";
+import {RememerComponent} from './rememer';
 
 export type FontSizeConfiguration = {
     fontSize: number;
     scaleFactor?: number;
+    overriddenComponent?: RememerComponent<ComponentType<any>>;
 };
 
 export type UserFontSizeConfigurationValue = {
     fontSize?: NumberOrLazyNumber;
     scaleFactor?: NumberOrLazyNumber;
+    overriddenComponent?: RememerComponent<ComponentType<any>>;
 };
 
 export type UserFontSizeConfiguration = PossiblyLazyValue<UserFontSizeConfigurationValue>;

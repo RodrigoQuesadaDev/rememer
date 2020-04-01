@@ -4,6 +4,7 @@ import {IFontSize, RootFontSize} from './font-size';
 export type RememerContextValue = {
     rootFontSize: RootFontSize;
     fontSize: IFontSize;
+    overriddenRememerId?: number
 };
 
 export const RememerContext = createContext<RememerContextValue | undefined>(undefined);
@@ -11,10 +12,11 @@ export const RememerConsumer = RememerContext.Consumer;
 
 type Props = {
     children?: ReactNode,
-    rootFontSize: RootFontSize,
+    rootFontSize: RootFontSize
 };
 
-export function RememerProvider(props: Props) {
+export function RememerProvider(props: Props)
+{
     const {children, rootFontSize} = props;
 
     const context = useMemo(() => ({rootFontSize, fontSize: rootFontSize}), [rootFontSize]);
@@ -26,7 +28,8 @@ export function RememerProvider(props: Props) {
     )
 }
 
-export function useRememerContext(fnName: string): RememerContextValue {
+export function useRememerContext(fnName: string): RememerContextValue
+{
     const context = useContext(RememerContext);
     if (context === undefined) throw new Error(`[${fnName}] You are not using a RememerProvider`);
 

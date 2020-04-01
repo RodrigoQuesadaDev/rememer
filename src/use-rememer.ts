@@ -1,5 +1,5 @@
-import {isRememerComponent, RememerComponent,} from "./rememer";
-import {useMemo} from "react";
+import {isRememerComponent,} from "./rememer";
+import {ComponentType, useMemo} from "react";
 import {useRememerContext} from "./rememer-provider";
 import {px, PxFn} from "./px";
 import {bp, BpFn} from "./bp";
@@ -11,8 +11,8 @@ import {FontSizeConfiguration, useComponentFontSizeConfig} from "./font-size-con
 
 export function useRememer(): UseRememerReturnType;
 export function useRememer(assumedFontSize: IFontSize): UseRememerReturnType;
-export function useRememer(Component: RememerComponent<any, any>, assumedConfig?: FontSizeConfiguration): UseRememerReturnType
-export function useRememer(arg1?: RememerComponent<any, any> | IFontSize, assumedConfig?: FontSizeConfiguration): UseRememerReturnType
+export function useRememer(Component: ComponentType<any>, assumedConfig?: FontSizeConfiguration): UseRememerReturnType
+export function useRememer(arg1?: ComponentType<any> | IFontSize, assumedConfig?: FontSizeConfiguration): UseRememerReturnType
 {
     const fnName = 'useRememer';
     let {Component, assumedFontSize} = readArguments(arg1);
@@ -55,7 +55,7 @@ export function useRememer(arg1?: RememerComponent<any, any> | IFontSize, assume
     }), [assumedFontSize, context]);
 }
 
-function readArguments(arg1?: RememerComponent<any, any> | IFontSize)
+function readArguments(arg1?: ComponentType<any> | IFontSize)
 {
     return isFontSize(arg1) ? {assumedFontSize: arg1} : {Component: arg1};
 }
