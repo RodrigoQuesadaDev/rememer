@@ -1,4 +1,4 @@
-export {memer, remem, isRememerComponent, RememerProps, RememerComponent, asRememerComponent} from './rememer';
+export {memer, remem, isRememerComponent, RememerProps, RememerComponent, asRememerComponent, restore} from './rememer';
 export {UserFontSizeConfiguration, FontSizeConfiguration,} from './font-size-configuration';
 export {useRememer} from './use-rememer';
 export {RememerProvider} from './rememer-provider';

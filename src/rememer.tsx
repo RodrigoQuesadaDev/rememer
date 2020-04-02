@@ -25,6 +25,25 @@ export function memer<C extends ComponentType<any> = ComponentType<any>>(arg1: U
     return rememerHoc('Memer', 'memer', 'em', undefined, arg1, arg2);
 }
 
+export function restore(Component: ComponentType<any>)
+{
+    const {userConfig, unit} = asRememerComponent(Component).__fontSizeConfig;
+
+    let arg1;
+    let arg2;
+    if (userConfig) {
+        arg1 = userConfig;
+        arg2 = Component;
+    }
+    else {
+        arg1 = Component;
+    }
+
+    return rememerHoc('RememerRestore', 'restore', unit, undefined, arg1, arg2);
+}
+
+//{ userConfig?: UserFontSizeConfiguration, unit: FontSizeUnit };
+
 let previousRememerId = 0;
 
 function rememerHoc<P, C extends ComponentType<any> = ComponentType<any>>(
@@ -46,10 +65,10 @@ function rememerHoc<P, C extends ComponentType<any> = ComponentType<any>>(
         Component,
         (props) => {
             const partialConfig = useFontSizeConfig(userConfig);
+            const overriddenRememerId = partialConfig?.overriddenComponent?.__rememerId || inferredOverriddenRememerId;
+
             const parentContext = useRememerContext(fnName);
             const parentFontSize = fontSizeUnit === 'rem' ? parentContext.rootFontSize : parentContext.fontSize;
-
-            const overriddenRememerId = partialConfig?.overriddenComponent?.__rememerId || inferredOverriddenRememerId;
 
             const config: FontSizeConfiguration = merge({scaleFactor: 1}, {fontSize: parentFontSize.px}, partialConfig);
             includeScaleFactorFromProps(config, props);
